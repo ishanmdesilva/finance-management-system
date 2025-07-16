@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.21.3.final using JasperReports Library version 6.21.3-4a3078d20785ebe464f18037d738d12fc98c13cf  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="expenses_report" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="2ddecfc0-262d-4d4d-b8dd-e9f7c7b6d1d7">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="ipay"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<parameter name="from_date" class="java.sql.Date"/>
+	<parameter name="to_date" class="java.sql.Date"/>
+	<parameter name="user_id" class="java.lang.String"/>
+	<parameter name="expense_category_id" class="java.lang.String"/>
+	<parameter name="expense_cat_name" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[CALL rp_users_expenses_date_range_sp($P{from_date}, $P{to_date}, $P{user_id}, $P{expense_category_id});]]>
+	</queryString>
+	<field name="id" class="java.lang.String"/>
+	<field name="updated_at" class="java.sql.Timestamp"/>
+	<field name="created_at" class="java.sql.Timestamp"/>
+	<field name="deleted" class="java.lang.Boolean"/>
+	<field name="deleted_at" class="java.sql.Timestamp"/>
+	<field name="description" class="java.lang.String"/>
+	<field name="expense_date" class="java.sql.Date"/>
+	<field name="amount" class="java.math.BigDecimal"/>
+	<field name="expens_category" class="java.lang.String"/>
+	<field name="first_name" class="java.lang.String"/>
+	<field name="last_name" class="java.lang.String"/>
+	<field name="email" class="java.lang.String"/>
+	<variable name="TOTAL_AMOUNT" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{amount}]]></variableExpression>
+	</variable>
+	<title>
+		<band height="40">
+			<staticText>
+				<reportElement x="0" y="0" width="555" height="40" uuid="58791ff0-1a79-4092-88d3-d2a6f9fe15f4"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[User Expense Report]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="80">
+			<staticText>
+				<reportElement x="0" y="10" width="140" height="20" uuid="ea994f88-6024-418f-98e6-8350305fa598"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[From Date:]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="140" y="10" width="170" height="20" uuid="a94e10fc-0cd4-4c90-92e3-edbefdbe9293"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{from_date}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="30" width="140" height="20" uuid="2217fc4b-8a78-46d7-9476-0e6132d196cd"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[To Date:]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="140" y="30" width="170" height="20" uuid="33271fb6-4766-4c19-a59d-99c681c83dd6"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{to_date}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="310" y="10" width="140" height="20" uuid="2923126e-9afc-4f83-bb12-252b38b2d247"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[User:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="450" y="10" width="105" height="20" uuid="b93ecf04-7bb8-484b-bade-a7981373537d"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{first_name} == null || $F{first_name}.isEmpty() || $F{last_name} == null || $F{last_name}.isEmpty() 
+? null 
+: $F{first_name} + " " + $F{last_name}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="310" y="30" width="140" height="20" uuid="74b729b5-6fca-4758-97f3-50844600be92"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Report Date :]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="450" y="30" width="105" height="20" uuid="cb73fbb7-736a-49dd-acd6-389b3fb726b1"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="50" width="140" height="20" uuid="f3af9d7b-5382-4871-a880-95aa9ba9b3cf"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Income Source:]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="140" y="50" width="170" height="20" uuid="dc0e2c87-66de-424f-bf06-6b2eee6a2429"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{expense_cat_name} != null ? $P{expense_cat_name} : "All"]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="30">
+			<staticText>
+				<reportElement mode="Transparent" x="0" y="0" width="50" height="30" backcolor="#E4C2FC" uuid="2902857a-1738-4dbe-b3ca-d9548b8b73d0"/>
+				<box padding="5">
+					<pen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[No.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="50" y="0" width="90" height="30" backcolor="#E4C2FC" uuid="4f0b2400-e286-4af5-9bf7-d317669d6fb3"/>
+				<box padding="5">
+					<pen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Expense Date]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="450" y="0" width="105" height="30" backcolor="#E4C2FC" uuid="4f0b2400-e286-4af5-9bf7-d317669d6fb4"/>
+				<box padding="5">
+					<pen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Amount]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="310" y="0" width="140" height="30" backcolor="#E4C2FC" uuid="4f0b2400-e286-4af5-9bf7-d317669d6fb5"/>
+				<box padding="5">
+					<pen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Category]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="140" y="0" width="170" height="30" backcolor="#E4C2FC" uuid="4f0b2400-e286-4af5-9bf7-d317669d6fb2"/>
+				<box padding="5">
+					<pen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Description]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="34">
+			<textField>
+				<reportElement x="0" y="0" width="50" height="34" uuid="40a1af65-5dd4-496a-997e-afc751f68eb3"/>
+				<box padding="5">
+					<pen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="50" y="0" width="90" height="34" uuid="4e18e513-be9a-426e-8e26-1bb6bb1f8dab"/>
+				<box padding="5">
+					<pen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{expense_date} == null ? null : $F{expense_date}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="450" y="0" width="105" height="34" uuid="4e18e513-be9a-426e-8e26-1bb6bb1f8dba"/>
+				<box padding="5">
+					<pen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[new java.text.DecimalFormat("#,##0.00").format($F{amount} == null ? null : $F{amount})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="310" y="0" width="140" height="34" uuid="4e18e513-be9a-426e-8e26-1bb6bb1f8db9"/>
+				<box padding="5">
+					<pen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{expens_category} == null || $F{expens_category}.isEmpty() ? null : $F{expens_category}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="140" y="0" width="170" height="34" uuid="4e18e513-be9a-426e-8e26-1bb6bb1f8dac"/>
+				<box padding="5">
+					<pen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{description} == null || $F{description}.isEmpty() ? null : $F{description}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<summary>
+		<band height="40">
+			<textField>
+				<reportElement mode="Transparent" x="310" y="0" width="140" height="30" backcolor="#E4C2FC" uuid="e5f25c24-b2d1-4f9b-85b2-0b36d241fb9a"/>
+				<box padding="5">
+					<pen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Total Amount: "]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="450" y="0" width="105" height="30" uuid="f1e2ab99-b3c3-49c5-a40e-50668161938d"/>
+				<box padding="5">
+					<pen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[new java.text.DecimalFormat("#,##0.00").format($V{TOTAL_AMOUNT})]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

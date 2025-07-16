@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.21.3.final using JasperReports Library version 6.21.3-4a3078d20785ebe464f18037d738d12fc98c13cf  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="UserIncomeReport" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="a1b2c3d4-e5f6-7890-abcd-ef1234567890">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="ipay"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<parameter name="from_date" class="java.sql.Date"/>
+	<parameter name="to_date" class="java.sql.Date"/>
+	<parameter name="user_id" class="java.lang.String"/>
+	<parameter name="income_source_id" class="java.lang.String"/>
+	<parameter name="income_source_name" class="java.lang.String"/>
+	<queryString language="SQL">
+		<![CDATA[CALL pfms.rp_users_incomes_date_range_sp($P{from_date}, $P{to_date}, $P{user_id}, $P{income_source_id});]]>
+	</queryString>
+	<field name="id" class="java.lang.String"/>
+	<field name="amount" class="java.math.BigDecimal"/>
+	<field name="income_date" class="java.sql.Date"/>
+	<field name="created_at" class="java.sql.Timestamp"/>
+	<field name="updated_at" class="java.sql.Timestamp"/>
+	<field name="income_source" class="java.lang.String"/>
+	<field name="first_name" class="java.lang.String"/>
+	<field name="last_name" class="java.lang.String"/>
+	<field name="email" class="java.lang.String"/>
+	<variable name="total_amount" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{amount}]]></variableExpression>
+	</variable>
+	<title>
+		<band height="31">
+			<staticText>
+				<reportElement x="0" y="0" width="554" height="30" uuid="fb93adad-60b8-4d5d-84e1-122e6dd6ecf0"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[User Income Report]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="80">
+			<staticText>
+				<reportElement x="0" y="10" width="100" height="20" uuid="17d945ed-13d0-4ce9-9723-faf36c950263"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[From Date:]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="100" y="10" width="180" height="20" uuid="d4571637-a500-4d44-8c2e-51c1f02df77e"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{from_date}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="30" width="100" height="20" uuid="d4afc27a-513f-41de-aa84-dec4cbb8ba75"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[To Date:]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="100" y="30" width="180" height="20" uuid="d1765fd7-01a1-4101-8327-135ec0febe1b"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{to_date}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="280" y="10" width="178" height="20" uuid="bd2bebf4-e075-4be4-bbbd-551375c4360f"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[User:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="458" y="10" width="96" height="20" uuid="0a089efb-8038-46fe-8129-87102de4461e"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{first_name} == null || $F{first_name}.isEmpty() || $F{last_name} == null || $F{last_name}.isEmpty() 
+? null 
+: $F{first_name} + " " + $F{last_name}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="280" y="30" width="178" height="20" uuid="c8b52c91-d0f5-4f18-b1b2-448d05111af2"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Report Date :]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="458" y="30" width="96" height="20" uuid="446850ae-efc6-4107-b856-c133aeaddf0a"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="50" width="100" height="20" uuid="4e66d831-94ca-4df2-b426-1c9b267d4b9f"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Income Source:]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="100" y="50" width="180" height="20" uuid="46902040-795b-4038-b0f6-351fcaf48add"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{income_source_name} != null ? $P{income_source_name} : "All"]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="30">
+			<staticText>
+				<reportElement mode="Transparent" x="0" y="0" width="100" height="30" backcolor="#E4C2FC" uuid="f47ac10b-58cc-4372-a567-0e02b2c3d471"/>
+				<box padding="5">
+					<pen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[No.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="458" y="0" width="96" height="30" backcolor="#E4C2FC" uuid="f47ac10b-58cc-4372-a567-0e02b2c3d472"/>
+				<box padding="5">
+					<pen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Amount]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="100" y="0" width="180" height="30" backcolor="#E4C2FC" uuid="f47ac10b-58cc-4372-a567-0e02b2c3d473"/>
+				<box padding="5">
+					<pen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Income Date]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="280" y="0" width="178" height="30" backcolor="#E4C2FC" uuid="f47ac10b-58cc-4372-a567-0e02b2c3d474"/>
+				<box padding="5">
+					<pen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Source]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="30">
+			<textField>
+				<reportElement x="0" y="0" width="100" height="30" uuid="f47ac10b-58cc-4372-a567-0e02b2c3d477"/>
+				<box padding="5">
+					<pen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="458" y="0" width="96" height="30" uuid="f47ac10b-58cc-4372-a567-0e02b2c3d478"/>
+				<box padding="5">
+					<pen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[new java.text.DecimalFormat("#,##0.00").format($F{amount} != null ? $F{amount} : 0)]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="100" y="0" width="180" height="30" uuid="f47ac10b-58cc-4372-a567-0e02b2c3d479"/>
+				<box padding="5">
+					<pen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{income_date} != null ? $F{income_date} : ""]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="280" y="0" width="178" height="30" uuid="f47ac10b-58cc-4372-a567-0e02b2c3d480"/>
+				<box padding="5">
+					<pen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{income_source} != null ? $F{income_source} : ""]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<summary>
+		<band height="40">
+			<staticText>
+				<reportElement mode="Transparent" x="280" y="0" width="178" height="30" backcolor="#E4C2FC" uuid="d02a8a57-b2c4-443c-aecb-999a5f6517a9"/>
+				<box padding="5">
+					<pen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total Amount:]]></text>
+			</staticText>
+			<textField pattern="#,​##0.00">
+				<reportElement x="458" y="0" width="96" height="30" uuid="8dd7f51b-b23d-4d72-a9ef-cebc0b740061"/>
+				<box padding="5">
+					<pen lineWidth="1.0" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{total_amount}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

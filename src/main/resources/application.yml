@@ -1,0 +1,48 @@
+spring:
+  application:
+    name: Personal Finance Management System
+
+
+
+  datasource:
+#    url: jdbc:mysql://localhost:3306/pfms?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+    url: jdbc:mysql://localhost:3306/pfms?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+    username: root
+    password: root@123
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+        format_sql: true
+        use_sql_comments: true
+
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer:
+      group-id: pfms-group
+
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      retries: 0
+#    template:
+#      default-topic: income.created
+
+server:
+  servlet:
+    context-path: /pfms
+logging:
+  level:
+    org.apache.kafka.clients.NetworkClient: ERROR
+    org.apache.kafka.clients.consumer.internals.AbstractCoordinator: ERROR
+    org.springframework.kafka: WARN
+auth:
+  enabled: true
+
+springdoc:
+  override-with-generic-response: false
